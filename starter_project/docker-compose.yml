@@ -1,0 +1,19 @@
+version: '3'
+services:
+  airflow:
+    image: apache/airflow:2.8.1-python3.10
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=False
+      - PYTHONPATH=/opt/airflow
+    env_file:
+      - .env
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+      - ./data:/opt/airflow/data
+      - ./output:/opt/airflow/output
+      - ./.env:/opt/airflow/.env
+    ports:
+      - "8080:8080"
+    command: standalone
